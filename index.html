@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE-edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>1</h1>
+    <h1>
+    def caching_fibonacci():
+        cache = {}
+
+    def fibonacci(n):
+        if n <= 0:
+            return 0
+        if n == 1:
+            return 1
+        if n in cache:
+            return cache[n]
+        
+        cache[n] = fibonacci(n - 1) + fibonacci(n - 2)
+        return cache[n]
+
+    return fibonacci
+
+fib = caching_fibonacci()
+
+print(fib(10))
+print(fib(15))</h1>
+
+        <h1>2</h1>
+        <h1>
+            import re
+    from typing import Callable, Generator
+
+def generator_numbers(text: str):
+    pattern = r'\b\d+\.\d+\b'
+    for match in re.finditer(pattern, text):
+        yield float(match.group())
+
+def sum_profit(text: str, func: Callable[[str], Generator[float, None, None]]) -> float:
+    return sum(func(text))
+
+text = "Загальний дохід працівника складається з декількох частин: 1000.01 як основний дохід, доповнений додатковими надходженнями 27.45 і 324.00 доларів."
+total_income = sum_profit(text, generator_numbers)
+print(f"Загальний дохід: {total_income}")
+</h1>
+
+    <h1>4</h1>
+    <h1>
+        def input_error(func):
+    def inner(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except KeyError:
+            return "No contact found under the given name."
+        except ValueError:
+            return "Give me name and phone please."
+        except IndexError:
+            return "Please provide the necessary arguments."
+    return inner
+
+def parse_input(user_input):
+    cmd, *args = user_input.split()
+    cmd = cmd.strip().lower()
+    return cmd, args
+
+@input_error
+def add_contact(args, contacts):
+    if len(args) != 2:
+        raise ValueError
+    name, phone = args
+    contacts[name] = phone
+    return "Contact added."
+
+@input_error
+def change_contact(args, contacts):
+    if len(args) != 2:
+        raise ValueError
+    name, new_phone = args
+    if name in contacts:
+        contacts[name] = new_phone
+        return "Contact updated."
+    else:
+        raise KeyError
+
+@input_error
+def show_phone(args, contacts):
+    if len(args) != 1:
+        raise IndexError
+    name = args[0]
+    if name in contacts:
+        return f"{name}'s phone number is {contacts[name]}."
+    else:
+        raise KeyError
+
+def main():
+    contacts = {}
+    print("Welcome to the Assistant Bot.")
+    while True:
+        user_input = input("Enter a command: ")
+        command, args = parse_input(user_input)
+
+        if command in {"close", "exit"}:
+            print("Goodbye.")
+            break
+        elif command == "hello":
+            print("How may I help you?")
+        elif command == "add":
+            print(add_contact(args, contacts))
+        elif command == "change":
+            print(change_contact(args, contacts))
+        elif command == "phone":
+            print(show_phone(args, contacts))
+        elif command == "all":
+            print(contacts)
+        else:
+            print("Invalid command.")
+
+if __name__ == "__main__":
+    main()</h1>
+
+</body>
+
+</html>
